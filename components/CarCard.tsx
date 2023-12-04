@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { CarProps } from "@/types";
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageUrl } from "@/utils";
 import Image from "next/image";
 import CustomButton from "./CustomButton";
+import CarDetails from "./CarDetails";
 
 interface CarCardProps {
   car: CarProps;
@@ -16,7 +17,7 @@ const CarCard = ({ car }: CarCardProps) => {
   return (
     <div className="car-card group">
       <div className="car-card__content">
-        <h2>
+        <h2 className="font-semibold text-xl capitalize">
           {make} {model}
         </h2>
       </div>
@@ -27,7 +28,7 @@ const CarCard = ({ car }: CarCardProps) => {
       </p>
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src="/hero.png"
+          src={generateCarImageUrl(car)}
           alt="car model"
           fill
           priority
@@ -66,6 +67,11 @@ const CarCard = ({ car }: CarCardProps) => {
           />
         </div>
       </div>
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
